@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crispy Octo Rotary Phone — v2</title>
+  <meta name="description" content="Retro rotary phone dialer with keypad, contacts, call log, and PWA." />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#0c1118" />
+</head>
+<body>
+  <main class="app">
+    <header class="flex">
+      <h1>☎️ Crispy Octo Rotary Phone <span style="opacity:.6;font-size:.8em">v2</span></h1>
+      <div class="badge">Now with keypad, contacts, call log, themes & haptics.</div>
+      <div class="right flex">
+        <button class="btn" id="btnHelp">Help</button>
+      </div>
+    </header>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="tabs">
+          <div class="tab active" id="tab-rotary">Rotary</div>
+          <div class="tab" id="tab-keypad">Keypad</div>
+        </div>
+        <div class="dial-wrap" id="panel-rotary">
+          <div class="dial" id="dial">
+            <div class="stopper"></div>
+            <div class="holes" id="holes"></div>
+            <div class="center">Operator</div>
+          </div>
+        </div>
+        <div id="panel-keypad" style="display:none">
+          <div class="grid-col-2" id="keypad">
+            <button class="btn" data-key="1">1</button>
+            <button class="btn" data-key="2">2</button>
+            <button class="btn" data-key="3">3</button>
+            <button class="btn" data-key="4">4</button>
+            <button class="btn" data-key="5">5</button>
+            <button class="btn" data-key="6">6</button>
+            <button class="btn" data-key="7">7</button>
+            <button class="btn" data-key="8">8</button>
+            <button class="btn" data-key="9">9</button>
+            <button class="btn" data-key="*">*</button>
+            <button class="btn" data-key="0">0</button>
+            <button class="btn" data-key="#">#</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3 class="section-title">Dialer</h3>
+        <div class="screen">
+          <div class="digits" id="digits">—</div>
+          <div class="status" id="status">Ready</div>
+        </div>
+        <div class="toolbar" style="margin-top:12px">
+          <button class="btn" id="btnBack">⌫</button>
+          <button class="btn" id="btnClear">Clear</button>
+          <button class="btn good" id="btnCall">Call</button>
+          <button class="btn danger" id="btnEnd" disabled>End</button>
+          <button class="btn muted" id="btnDemo">Demo: 123-4567</button>
+        </div>
+
+        <h3 class="section-title" style="margin-top:18px">Contacts</h3>
+        <div class="toolbar">
+          <button class="btn good" id="btnAddContact">+ Add Contact</button>
+        </div>
+        <div id="contacts" class="list" aria-label="Contacts list"></div>
+
+        <h3 class="section-title" style="margin-top:18px">Call Log</h3>
+        <div id="calllog" class="list" aria-label="Call log"></div>
+
+        <h3 class="section-title" style="margin-top:18px">Settings</h3>
+        <div class="grid-col-2">
+          <label>Theme
+            <select id="selTheme" class="select">
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+              <option value="system">System</option>
+            </select>
+          </label>
+          <label>Mode
+            <select id="selMode" class="select">
+              <option value="rotary">Rotary</option>
+              <option value="keypad">Keypad</option>
+            </select>
+          </label>
+          <label><input type="checkbox" id="chkSound" /> Sound</label>
+          <label><input type="checkbox" id="chkHaptics" /> Haptics</label>
+        </div>
+
+        <audio id="snd-click" preload="auto" src="assets/sounds/click.wav"></audio>
+        <audio id="snd-ring"  preload="auto" src="assets/sounds/ring.wav"></audio>
+        <audio id="snd-busy"  preload="auto" src="assets/sounds/busy.wav"></audio>
+      </div>
+    </section>
+
+    <footer class="flex">
+      <div>Built for fun • Offline-friendly</div>
+      <div><a href="https://github.com/ravalmahsee/crispy-octo-rotary-phone" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+    </footer>
+  </main>
+
+  <!-- Help Modal -->
+  <div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="card">
+      <h3 id="helpTitle" style="margin-top:0">How to use</h3>
+      <ul>
+        <li><b>Rotary:</b> Drag a hole to the stopper and release to dial a digit.</li>
+        <li><b>Keypad:</b> Tap digits; DTMF tones play if Sound is on.</li>
+        <li><b>Keyboard:</b> 0–9, Enter (call), Backspace (delete).</li>
+        <li><b>Contacts:</b> Add and tap <i>Call</i> to auto-fill and call.</li>
+        <li><b>Settings:</b> Switch theme, toggle sound/haptics, choose mode.</li>
+        <li><b>Offline:</b> Install as app — works without internet.</li>
+      </ul>
+      <div class="flex" style="margin-top:10px"><div class="right"><button class="btn" id="btnCloseHelp">Close</button></div></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import "./js/state.js";
+    import {mountSettings, mountKeypad} from "./js/ui.js";
+    import "./js/app.js";
+    mountKeypad();
+  </script>
+</body>
+</html>
